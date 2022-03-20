@@ -1,0 +1,9 @@
+# Project exclude paths
+/authentication/target/
+/db-connections/target/
+/exception/target/
+/generalinputs/target/
+/products/target/
+/shop/target/
+/shopfeature/target/
+/validation/target/

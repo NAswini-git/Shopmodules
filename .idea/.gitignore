@@ -1,0 +1,16 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+/compiler.xml
+/dbnavigator.xml
+/jarRepositories.xml
+/misc.xml
+/uiDesigner.xml
+/authentication/target
+/db-connections/target
+/exception/target
+/generalinputs/target
+/products/target
+/shop/target
+/validation/target
+
