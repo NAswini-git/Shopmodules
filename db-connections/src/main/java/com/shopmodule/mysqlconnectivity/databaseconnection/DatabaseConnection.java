@@ -17,14 +17,11 @@ import java.util.Properties;
 public class DatabaseConnection {
 
     private static Connection connection = null;
-    private static Properties properties1 = new Properties();
-    private static DatabaseConnection databaseConnection;
-    static Map<String, String> properties;
+    private static Map<String, String> properties;
 
     public void setProperty(Map<String, String> properties) {
         this.properties = properties;
     }
-
 
     /**
      * Get Connection of database
