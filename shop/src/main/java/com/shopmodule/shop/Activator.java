@@ -27,28 +27,6 @@ public class Activator  {
 
     public static Bundle bundleid;
     private Server server;
-//
-//    /**
-//     * Starts the bundle.
-//     *
-//     * @param context
-//     */
-//    public void start(BundleContext context) {
-//        System.out.println("Starting the bundle");
-//        bundleid = context.getBundle();
-//        //LoginPortal.renderLoginPortal();
-//
-//    }
-//
-//    /**
-//     * Stops the bundle.
-//     *
-//     * @param context
-//     */
-//    public void stop(BundleContext context) {
-//
-//        System.out.println("Stopping the bundle");
-//    }
 
     /**
      * Activates the server to implement REST services.
@@ -60,14 +38,13 @@ public class Activator  {
 
             DatabaseConnection databaseConnection = new DatabaseConnection();
             databaseConnection.setProperty(properties);
-            System.out.println("url" + properties.get("jdbc.url"));
             JAXRSServerFactoryBean bean = new JAXRSServerFactoryBean();
             bean.setAddress("/product");
             bean.setBus(BusFactory.getDefaultBus());
             bean.setProvider(new JacksonJsonProvider());
             bean.setServiceBean(new RestImpl());
             server = bean.create();
-            LoginPortal.renderLoginPortal();
+           // LoginPortal.renderLoginPortal();
 
         } catch (Exception e) {
             System.out.println(e);
