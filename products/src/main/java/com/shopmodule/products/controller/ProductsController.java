@@ -71,7 +71,7 @@ public class ProductsController {
     }
 
     /**
-     * Shows the products in appropriate pages as mentioned by the user.
+     * Shows the products in appropriate paginated form.
      *
      * @param page
      * @param size

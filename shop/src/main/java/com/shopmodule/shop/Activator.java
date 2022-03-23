@@ -1,40 +1,88 @@
-
 package com.shopmodule.shop;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.shopmodule.authentication.view.LoginPortal;
 
+import com.shopmodule.mysqlconnectivity.databaseconnection.DatabaseConnection;
+import com.shopmodule.products.controller.RestImpl;
+import org.apache.cxf.BusFactory;
+import org.apache.cxf.endpoint.Server;
+import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+
+import java.util.Map;
 
 /**
  * Application begins from this class.
  *
  * @author AswiniN
  */
-public class Activator implements BundleActivator {
+@Component(immediate = true, name = "db")
+public class Activator  {
 
     public static Bundle bundleid;
+    private Server server;
+//
+//    /**
+//     * Starts the bundle.
+//     *
+//     * @param context
+//     */
+//    public void start(BundleContext context) {
+//        System.out.println("Starting the bundle");
+//        bundleid = context.getBundle();
+//        //LoginPortal.renderLoginPortal();
+//
+//    }
+//
+//    /**
+//     * Stops the bundle.
+//     *
+//     * @param context
+//     */
+//    public void stop(BundleContext context) {
+//
+//        System.out.println("Stopping the bundle");
+//    }
 
     /**
-     * Starts the bundle.
-     *
-     * @param context
+     * Activates the server to implement REST services.
      */
-    public void start(BundleContext context) {
+    @Activate
+    public void activate(Map<String, String> properties) {
 
-        System.out.println("Starting the bundle");
-        bundleid = context.getBundle();
-        //LoginPortal.renderLoginPortal();
+        try {
+
+            DatabaseConnection databaseConnection = new DatabaseConnection();
+            databaseConnection.setProperty(properties);
+            System.out.println("url" + properties.get("jdbc.url"));
+            JAXRSServerFactoryBean bean = new JAXRSServerFactoryBean();
+            bean.setAddress("/product");
+            bean.setBus(BusFactory.getDefaultBus());
+            bean.setProvider(new JacksonJsonProvider());
+            bean.setServiceBean(new RestImpl());
+            server = bean.create();
+            LoginPortal.renderLoginPortal();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     /**
-     * Stops the bundle.
+     * Deactivates the server.
      *
-     * @param context
+     * @throws Exception
      */
-    public  void stop(BundleContext context) {
-
-        System.out.println("Stopping the bundle");
+    @Deactivate
+    public void deactivate() throws Exception {
+        if (server != null) {
+            server.destroy();
+        }
     }
 }

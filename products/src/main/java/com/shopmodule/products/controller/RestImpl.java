@@ -85,7 +85,6 @@ public class RestImpl implements Rest {
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     public List<Product> searchProduct(@QueryParam("productname") final String productName) {
-        System.out.println("pdt"+productName);
         return PRODUCTS_CONTROLLER.selectProduct(productName);
     }
 }

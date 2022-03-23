@@ -57,8 +57,7 @@
                        <instructions>
                            <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                            <Bundle-Version>${project.version}</Bundle-Version>
-                           <Bundle-Activator>com.shopmodule.products.controller.Activator</Bundle-Activator>
-                       </instructions>
+                          </instructions>
                    </configuration>
                </plugin>
            </plugins>

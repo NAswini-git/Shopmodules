@@ -81,7 +81,6 @@
                 <artifactId>maven-bundle-plugin</artifactId>
                 <configuration>
                     <instructions>
-                        <Bundle-Activator>com.shopmodule.products.controller.Activator</Bundle-Activator>
                         <Export-Package>
                             com.shopmodule*;version=${project.version}
                         </Export-Package>
