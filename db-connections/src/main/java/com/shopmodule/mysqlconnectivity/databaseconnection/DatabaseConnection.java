@@ -23,7 +23,6 @@ public class DatabaseConnection {
 
     public void setProperty(Map<String, String> properties) {
         this.properties = properties;
-        System.out.println("u"+properties.get("jdbc.url"));
     }
 
 
