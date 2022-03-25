@@ -23,7 +23,7 @@ public class AuthenticatorDAO {
      */
     public User getUserEmailId(final String emailId) {
         final User user = new User();
-        final String selectQuery = "SELECT * FROM user WHERE email_id = ?";
+        final String selectQuery = "SELECT email_id, password, type_of_user FROM user WHERE email_id = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(selectQuery)) {
@@ -51,7 +51,7 @@ public class AuthenticatorDAO {
      * @param typeOfUser
      */
     public boolean insertUserData(final User user, final String typeOfUser) {
-        final String INSERT_ID_DETAILS = "INSERT INTO user (email_id, password, type_of_user)VALUES(?, ?, ?)";
+        final String INSERT_ID_DETAILS = "INSERT INTO user (email_id, password, type_of_user)VALUES (?, ?, ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ID_DETAILS)) {

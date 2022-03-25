@@ -2,51 +2,45 @@ package com.shopmodule.shop;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.shopmodule.authentication.view.LoginPortal;
-
-import com.shopmodule.mysqlconnectivity.databaseconnection.DatabaseConnection;
 import com.shopmodule.products.controller.RestImpl;
+
+import com.shopmodule.products.view.ProductManager;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
+import org.apache.log4j.Logger;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
-import java.util.Map;
-
 /**
- * Application begins from this class.
+ * Server lifecycle execution.
  *
  * @author AswiniN
  */
-@Component(immediate = true, name = "db")
-public class Activator  {
+@Component(immediate = true)
+public class RestActivator  {
 
-    public static Bundle bundleid;
     private Server server;
+    private static final Logger LOGGER = Logger.getLogger(RestActivator.class);
 
     /**
      * Activates the server to implement REST services.
      */
     @Activate
-    public void activate(Map<String, String> properties) {
+    public void activate() {
 
         try {
-
-            DatabaseConnection databaseConnection = new DatabaseConnection();
-            databaseConnection.setProperty(properties);
-            JAXRSServerFactoryBean bean = new JAXRSServerFactoryBean();
+            final JAXRSServerFactoryBean bean = new JAXRSServerFactoryBean();
             bean.setAddress("/product");
             bean.setBus(BusFactory.getDefaultBus());
             bean.setProvider(new JacksonJsonProvider());
             bean.setServiceBean(new RestImpl());
             server = bean.create();
-           // LoginPortal.renderLoginPortal();
+          //  LoginPortal.renderLoginPortal();
 
         } catch (Exception e) {
+            LOGGER.info(e);
             System.out.println(e);
         }
     }

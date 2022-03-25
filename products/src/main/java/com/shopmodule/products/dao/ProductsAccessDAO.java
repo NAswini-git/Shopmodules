@@ -49,7 +49,7 @@ public class ProductsAccessDAO {
             }
             return true;
         } catch (SQLException  e) {
-            throw new DatabaseAccessDeniedException("Error occured while inserting the product. Query may be invalid.");
+            throw new DatabaseAccessDeniedException("Error occurred while inserting the product. Query may be invalid.");
         }
     }
 
@@ -67,6 +67,18 @@ public class ProductsAccessDAO {
             preparedStatement.setString(2, product.getBrandName());
             preparedStatement.setString(3, product.getSize());
 
+            return preparedStatement.executeUpdate() > 0;
+        } catch (SQLException  e) {
+            throw new DatabaseAccessDeniedException("Query may be invalid. So database access failed!");
+        }
+    }
+
+    public boolean delete(final Product product) {
+        final String deleteQuery = "DELETE FROM products WHERE product_id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+            preparedStatement.setString(1, product.getProductId());
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException  e) {
             throw new DatabaseAccessDeniedException("Query may be invalid. So database access failed!");
@@ -105,7 +117,6 @@ public class ProductsAccessDAO {
      * Selects a specific product.
      * 
      * @param productName
-     * @return
      */
     public List<Product> selectProduct(String productName) {
 
@@ -119,7 +130,7 @@ public class ProductsAccessDAO {
              ResultSet productsResultSet = preparedStatement.executeQuery()) {
 
             while (productsResultSet.next()) {
-                Product product = new Product();
+                final Product product = new Product();
 
                 product.setProductId(productsResultSet.getString(1));
                 product.setProductName(productsResultSet.getString(2));

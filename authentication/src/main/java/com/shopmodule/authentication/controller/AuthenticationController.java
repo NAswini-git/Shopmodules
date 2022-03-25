@@ -30,7 +30,7 @@ public class AuthenticationController {
      * @param typeOfUser
      */
     public boolean validatePassword(final String emailId, final String password, int typeOfUser) {
-        return AUTHENTICATOR_VALIDATION.validtePassword(emailId, password, typeOfUser);
+        return AUTHENTICATOR_VALIDATION.validatePassword(emailId, password, typeOfUser);
     }
 
     /**

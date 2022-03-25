@@ -16,7 +16,7 @@ public class Validation {
      *
      * @param price
      */
-    static boolean validatePrice(String price) {
+    static boolean validatePrice(final String price) {
         return (price.matches("^[1-9]{1}|([1-9]{1}[0-9]{1,5})$")
                 || (price.matches("^([1-9]{1}[0-9]{1,5}+.([0-9]{1,5}))$"))) ? true : false;
     }
@@ -26,7 +26,7 @@ public class Validation {
      *
      * @param size
      */
-    static boolean validateSize(String size) {
+    static boolean validateSize(final String size) {
         return size.matches("^(?i).*-|s|m|l|-{1}.*");
     }
 

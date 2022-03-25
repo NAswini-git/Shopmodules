@@ -35,7 +35,6 @@ public class ProductDetails {
         product.setSize(ProductDetails.getSize());
         product.setQuantity(PRODUCT_DETAILS.getQuantity());
         product.setDiscount(PRODUCT_DETAILS.getDiscount());
-        
         return product;
     }
 
@@ -165,7 +164,6 @@ public class ProductDetails {
         products.setProductName(ProductDetails.getProductName());
         products.setBrandName(ProductDetails.getBrandName());
         products.setSize(ProductDetails.getSize());
-        
         return products;
     }
 
@@ -218,7 +216,7 @@ public class ProductDetails {
                 System.out.println();
             }
         } catch (CustomException e) {
-            System.out.println(e);
+            LOGGER.warn(e);
         }
     }
 }

@@ -4,6 +4,7 @@ import com.shopmodule.generalinputs.userinput.UserInput;
 import com.shopmodule.products.controller.ProductsController;
 import com.shopmodule.products.model.Product;
 import com.shopmodule.exception.userdefinedexceptions.CustomException;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
 public class ProductManager {
 
     private static final ProductsController PRODUCT_CONTROLLER = new ProductsController();
+    private static final Logger LOGGER = Logger.getLogger(ProductManager.class);
 
     /**
      * Shows the choice to admin.
@@ -27,11 +29,11 @@ public class ProductManager {
             if (adminChoice >= 1 && adminChoice < 7) {
                 ProductManager.productAlterCategory(adminChoice);
             } else {
-                System.out.println("Enter choice between 1 to 6.");
+                LOGGER.info("Enter choice between 1 to 6.");
             }
             ProductManager.showAdminChoice();
         } catch (NumberFormatException e) {
-            System.out.println("Please enter choice between 1 to 6.");
+            LOGGER.warn("Please enter choice between 1 to 6.");
             ProductManager.showAdminChoice();
         }
     }
@@ -90,10 +92,10 @@ public class ProductManager {
         try {
 
             if (PRODUCT_CONTROLLER.insertProduct(product)) {
-                System.out.println("Successfully inserted");
+                LOGGER.info("Successfully inserted");
             }
         } catch (CustomException e) {
-            System.out.println(e);
+            LOGGER.warn(e);
         }
         ProductManager.showAdminChoice();
     }
@@ -108,10 +110,10 @@ public class ProductManager {
         try {
             
             if (PRODUCT_CONTROLLER.updateProducts(product)) {
-                System.out.println("Successfully updated.");
+                LOGGER.info("Successfully updated.");
             }
         } catch (CustomException e) {
-            System.out.println(e);
+            LOGGER.warn(e);
         }
         ProductManager.showAdminChoice();
     }
@@ -125,10 +127,10 @@ public class ProductManager {
 
         try {
             final String output = PRODUCT_CONTROLLER.deleteProduct(product) ? "Successfully Deleted " : "Something went wrong while deleting";
-           
-            System.out.println(output);
+
+            LOGGER.info(output);
         } catch (CustomException e) {
-            System.out.println(e);
+            LOGGER.warn(e);
         }
         ProductManager.showAdminChoice();
     }
@@ -148,11 +150,10 @@ public class ProductManager {
                 System.out.println(String.format("Size: %s", newProduct.getSize()));
                 System.out.println(String.format("Quantity: %s", newProduct.getQuantity()));
                 System.out.println(String.format("Discount: %s", newProduct.getDiscount()).concat("%"));
-
                 System.out.println();
             }
         } catch (CustomException e) {
-            System.out.println(e);
+            LOGGER.warn(e);
         }
     }
 }

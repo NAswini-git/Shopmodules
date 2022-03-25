@@ -1,10 +1,14 @@
 package com.shopmodule.products.controller;
 
-import com.shopmodule.products.model.Product;
-import org.osgi.service.component.annotations.Component;
+import com.shopmodule.products.model.*;
 
+import com.shopmodule.products.service.ProductValidator;
+import jakarta.validation.Valid;
+import jakarta.ws.rs.PATCH;
+import org.osgi.service.component.annotations.Component;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +21,7 @@ import java.util.List;
 @Component(immediate = true, service = Rest.class)
 public class RestImpl implements Rest {
 
-    private static final ProductsController PRODUCTS_CONTROLLER = new ProductsController();
+    private static final RestController REST_CONTROLLER = new RestController();
 
     /**
      * Shows the products available in the table.
@@ -25,43 +29,62 @@ public class RestImpl implements Rest {
      * @param page
      * @param limit
      */
-    @Path("/allproducts")
-    @Produces("application/json")
+    @Path("/allProducts")
+    @Produces(MediaType.APPLICATION_JSON)
     @GET
-    public List<Product> showProductDetails(@QueryParam("page") int page,
-                                            @QueryParam("limit") int limit) {
+    public List<Product> showProductDetails(@Valid @QueryParam("page") final int page,
+                                            @Valid @QueryParam("limit") final int limit){
 
         if (page == 0 && limit == 0) {
-            return PRODUCTS_CONTROLLER.showProductDetails();
+            return REST_CONTROLLER.showProductDetails();
         } else if (page <=0 || limit <=0) {
            return new ArrayList<>();
        }
-        return PRODUCTS_CONTROLLER.showPaginatedProductDetails(page, limit);
+        return REST_CONTROLLER.showPaginatedProductDetails(page, limit);
     }
-
 
     /**
      * Inserts the product.
      *
      * @param product
      */
-    @Path("/insertproduct")
-    @Consumes("application/json")
+    @Path("/insertProduct")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @POST
-    public boolean insertProduct(final Product product) {
-        return PRODUCTS_CONTROLLER.insertProduct(product);
+    public List insertProduct(@Valid final Product product) {
+        List violationList = ProductValidator.checkProduct(product, ProductInsertChecks.class);
+
+        if (!violationList.isEmpty()) {
+            List list = new ArrayList<>();
+            list.add(violationList);
+            return list;
+        }
+        return REST_CONTROLLER.insertProduct(product);
     }
+
 
     /**
      * Deletes the product.
      *
-     * @param product
+     * @param productId
      */
-    @Path("/deleteproduct")
-    @Consumes("application/json")
+    @Path("/deleteProduct")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @DELETE
-    public boolean deleteProduct(final Product product) {
-        return PRODUCTS_CONTROLLER.deleteProduct(product);
+    public List deleteProduct(@Valid @QueryParam("productId") final String productId) {
+        Product product = new Product();
+        product.setProductId(productId);
+        List violationList = ProductValidator.checkProduct(product, ProductDeleteChecks.class);
+
+        if (!violationList.isEmpty()) {
+            List list = new ArrayList<>();
+            list.add(violationList);
+           return list;
+        }
+
+        return REST_CONTROLLER.deleteProduct(product);
     }
 
     /**
@@ -69,11 +92,19 @@ public class RestImpl implements Rest {
      *
      * @param product
      */
-    @Path("/updateproduct")
-    @Consumes("application/json")
+    @Path("/updateProduct")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @PUT
-    public boolean updateProduct(final Product product) {
-        return PRODUCTS_CONTROLLER.updateProducts(product);
+    public List updateProduct(@Valid final Product product) {
+        List violationList = ProductValidator.checkProduct(product, ProductUpdateChecks.class);
+
+        if (!violationList.isEmpty()) {
+            List list = new ArrayList<>();
+            list.add(violationList);
+            return list;
+        }
+        return REST_CONTROLLER.updateProducts(product);
     }
 
     /**
@@ -81,10 +112,30 @@ public class RestImpl implements Rest {
      *
      * @param productName
      */
-    @Path("/searchproduct")
+    @Path("/searchProduct")
     @Produces(MediaType.APPLICATION_JSON)
     @GET
-    public List<Product> searchProduct(@QueryParam("productname") final String productName) {
-        return PRODUCTS_CONTROLLER.selectProduct(productName);
+    public List searchProduct(@Valid @QueryParam("productName") final String productName) {
+        Product product = new Product();
+
+        product.setProductName(productName);
+        List list = ProductValidator.checkProduct(product, ProductSelectChecks.class);
+        if (list.isEmpty()) {
+            return REST_CONTROLLER.selectProduct(productName);
+        }
+        return list;
     }
+
+    //    @Path("/deleteProduct")
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @DELETE
+//    public List deleteProduct(@Valid final Product product) {
+//        List violationList = ProductValidator.checkProduct(product, ProductDeleteChecks.class);
+//
+//        if (!violationList.isEmpty()) {
+//            List list = new ArrayList<>();
+//            list.add(violationList);
+//            return list;
+//        }
 }

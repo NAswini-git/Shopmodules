@@ -25,13 +25,14 @@ public class LoginPortal {
     public static void renderLoginPortal() {
         final User user = new User();
 
-            user.setPreferredChoice(USER_INPUT.getInt("1. SignUp 2. SignIn"));
-            if (user.getPreferredChoice() == 1 || user.getPreferredChoice() == 2) {
-                LoginPortal.renderUserChoicePortal(user);
-            } else {
-                LOGGER.warn("Invalid choice. Give a valid input.");
-                LoginPortal.renderLoginPortal();
-            }
+        user.setPreferredChoice(USER_INPUT.getInt("1. SignUp 2. SignIn"));
+
+        if (user.getPreferredChoice() == 1 || user.getPreferredChoice() == 2) {
+            LoginPortal.renderUserChoicePortal(user);
+        } else {
+            LOGGER.warn("Invalid choice. Give a valid input.");
+            LoginPortal.renderLoginPortal();
+        }
     }
 
     /**
@@ -40,16 +41,15 @@ public class LoginPortal {
      * @param user
      */
     private static void renderUserChoicePortal(final User user) {
+        user.setTypeOfUser(USER_INPUT.getInt("1. Admin  2. User "));
 
-            user.setTypeOfUser(USER_INPUT.getInt("1. Admin  2. User "));
-
-            if (user.getTypeOfUser() == 1 || user.getTypeOfUser() == 2) {
-                LoginPortal.signUpOrSignIn(user);
-            } else {
-                LOGGER.warn("Invalid choice. Give a valid input.");
-                LoginPortal.renderUserChoicePortal(user);
-            }
+        if (user.getTypeOfUser() == 1 || user.getTypeOfUser() == 2) {
+            LoginPortal.signUpOrSignIn(user);
+        } else {
+            LOGGER.warn("Invalid choice. Give a valid input.");
+            LoginPortal.renderUserChoicePortal(user);
         }
+    }
 
     /**
      * Routes the user based on the selected choice.
@@ -92,8 +92,7 @@ public class LoginPortal {
         if (Validation.validateEmailId(emailId)) {
             return emailId;
         } else {
-            LOGGER.warn(
-                    "Give a valid Email Id (Email Id should have proper domain name, upper or lower case, digits only before @.)");
+            LOGGER.warn("Give a valid Email Id (Email Id should have proper domain name, upper or lower case, digits only before @.)");
             return LoginPortal.getEmailId();
         }
     }
@@ -107,15 +106,14 @@ public class LoginPortal {
         if (Validation.validatePassword(password)) {
             return password;
         } else {
-            LOGGER.warn(
-                    "Give a valid Password (Password should contain min 6 characters, 1 Uppercase, 1 Lowercase 1, Special character, 1 digit)");
+            LOGGER.warn("Give a valid Password (Password should contain min 6 characters, 1 Uppercase, 1 Lowercase 1, Special character, 1 digit)");
             return LoginPortal.getPassword();
         }
     }
 
     /**
      * Gets authenticator key if the user is admin.
-     * 
+     *
      * @param user
      */
     private static void checkKey(final User user) {
@@ -152,7 +150,7 @@ public class LoginPortal {
 
     /**
      * Validates the password if the user is logging in.
-     * 
+     *
      * @param user
      */
     private static void checkPassword(final User user) {
@@ -168,7 +166,7 @@ public class LoginPortal {
 
     /**
      * Shows the products available in the database.
-     * 
+     *
      * @param user
      */
     private static void showProductDetails(final User user) {
@@ -178,7 +176,7 @@ public class LoginPortal {
         } else {
             ProductDetails.showProductDetails();
             ProductManager.searchProduct();
-            LoginPortal.choicetoContinue();
+            LoginPortal.choiceToContinue();
         }
     }
 
@@ -194,14 +192,15 @@ public class LoginPortal {
         }
         return choice;
     }
+
     /**
      * Routes the user based on the choice.
      */
-    private static void choicetoContinue() {
+    private static void choiceToContinue() {
 
         do {
             final String choice = USER_INPUT.getString("Do you need to search products: yes/no");
-            
+
             if ("Yes".equalsIgnoreCase(choice)) {
                 ProductManager.searchProduct();
             } else if ("No".equalsIgnoreCase(choice)) {

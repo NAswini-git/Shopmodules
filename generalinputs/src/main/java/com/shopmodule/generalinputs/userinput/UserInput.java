@@ -13,8 +13,7 @@ public class UserInput {
     public final Scanner SCANNER = new Scanner(System.in);
     private static UserInput userInput;
 
-
-    private UserInput(){
+    private UserInput() {
     }
 
     /**
@@ -22,7 +21,7 @@ public class UserInput {
      * @return
      */
     public static UserInput getInstance() {
-        if (userInput == null){
+        if (userInput == null) {
             userInput = new UserInput();
         }
         return userInput;
@@ -50,7 +49,7 @@ public class UserInput {
 
         try {
             return SCANNER.nextInt();
-        }catch (InputMismatchException e){
+        } catch (InputMismatchException e) {
             System.out.println("give valid integers.");
             SCANNER.next();
             return getInt(credential);
@@ -63,7 +62,7 @@ public class UserInput {
      * @param credential
      * @return
      */
-    public double getDouble(final String credential){
+    public double getDouble(final String credential) {
         System.out.println(credential);
 
         try {

@@ -8,7 +8,7 @@ import com.shopmodule.authentication.model.User;
  *
  * @author AswiniN
  */
-public class AuthenticatorValidation  {
+public class AuthenticatorValidation {
 	
     private static final AuthenticatorDAO AUTHENTICATOR_DAO = new AuthenticatorDAO();
 
@@ -36,15 +36,15 @@ public class AuthenticatorValidation  {
 	 * @param password
 	 * @param preferredChoice
 	 */
-	public boolean validtePassword(final String emailId, final String password, final int preferredChoice) {
+	public boolean validatePassword(final String emailId, final String password, final int preferredChoice) {
 		final User user = AUTHENTICATOR_DAO.getUserEmailId(emailId);
 		
 		if (preferredChoice == 1) {
-		if (user.getPassword().equals(password) && user.getUserType().equals("admin")) {
-		 //  ProductManager.showAdminChoice();
-		    System.out.println("admin");
-			return true;
-		}
+
+		    if (user.getPassword().equals(password) && user.getUserType().equals("admin")) {
+		        System.out.println("admin");
+			    return true;
+		    }
 		} else {
 		    return (user.getPassword().equals(password) && user.getUserType().equals("user")) ? true : false;  
 		}

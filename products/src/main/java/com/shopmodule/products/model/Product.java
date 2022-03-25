@@ -1,17 +1,37 @@
 package com.shopmodule.products.model;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 /**
  * Class for products table.
  * 
  * @author AswiniN
  */
 public class Product {
+   // @NotEmpty (message = "Give valid product name", groups = {ProductSelectChecks.class, ProductInsertChecks.class, ProductUpdateChecks.class})
+    @Pattern(message = "Only Alphabets should be given", regexp = "^[A-Za-z\\s ]{1,20}$", groups = {ProductSelectChecks.class, ProductInsertChecks.class, ProductUpdateChecks.class} )
     private String productName;
+
+    @NotNull (message = "Give valid brand name", groups = {ProductInsertChecks.class, ProductUpdateChecks.class})
     private String brandName;
+
+    @NotNull (message = "Give valid price", groups = {ProductInsertChecks.class})
     private String price;
+
+    @NotNull (message = "Give valid size", groups = {ProductInsertChecks.class})
     private String size;
+
+    @NotNull (message = "Give valid quantity", groups = {ProductInsertChecks.class,  ProductUpdateChecks.class})
+    @Min(value = 1, message = "At least 1 product should be found")
     private String quantity;
+
+    @NotNull (message = "Give valid quantity", groups = {ProductInsertChecks.class})
     private String discount;
+
+    @NotEmpty (message = "Give valid productId", groups = {ProductInsertChecks.class, ProductDeleteChecks.class})
     private String getProductId;
 
     public String getProductId() {

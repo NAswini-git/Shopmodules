@@ -13,12 +13,14 @@ public interface Rest {
 
     List<Product> showProductDetails(int page, int limit);
 
-    boolean insertProduct(Product product);
+    List insertProduct(Product product);
 
-    boolean deleteProduct(Product product);
+   // List deleteProduct(Product product);
 
-    boolean updateProduct(Product product);
+    List updateProduct(Product product);
 
     List<Product> searchProduct(String productName);
+
+    List deleteProduct(String productId);
 
 }

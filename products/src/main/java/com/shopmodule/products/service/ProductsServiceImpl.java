@@ -14,7 +14,6 @@ import java.util.List;
  *
  * @author AswiniN
  */
-
 public class ProductsServiceImpl implements ProductsService {
 
     private static final ProductsAccessDAO PRODUCTS_DAO = new ProductsAccessDAO();
@@ -26,7 +25,7 @@ public class ProductsServiceImpl implements ProductsService {
         List<Product> product = PRODUCTS_DAO.selectAllProducts();
 
         if (!product.isEmpty()) {
-            return product;
+           return product;
         }
         throw new ProductNotFoundException("Products are not available in the table");
     }
@@ -67,9 +66,7 @@ public class ProductsServiceImpl implements ProductsService {
                 return true;
             } else if (listOfProducts.getProductName().equals(product.getProductName()) && listOfProducts.getBrandName().equals(product.getBrandName())) {
                 System.out.println("Product already available");
-
                 return true;
-
             }
         }
         return false;
@@ -125,12 +122,11 @@ public class ProductsServiceImpl implements ProductsService {
      * @param productName
      */
     public List<Product> selectProduct(String productName) {
-
         List<Product> product = PRODUCTS_DAO.selectProduct(productName);
 
         if (!product.isEmpty()) {
             return product;
-        }
+       }
         throw new ProductNotFoundException("Given product is not available in the table");
     }
 
@@ -139,7 +135,7 @@ public class ProductsServiceImpl implements ProductsService {
      *
      * @param productId
      */
-    public boolean validateId(String productId) {
+    public boolean validateId(final String productId) {
         List<Product> products = PRODUCTS_DAO.selectAllProducts();
 
         for (Product listOfProducts : products) {
