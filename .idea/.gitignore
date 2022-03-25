@@ -13,4 +13,5 @@
 /products/target
 /shop/target
 /validation/target
-
+/vcs.xml
+/encodings.xml
