@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Gets the choice for modification of products by admin.
- * 
+ *
  * @author AswiniN
  */
 public class ProductManager {
@@ -40,51 +40,51 @@ public class ProductManager {
 
     /**
      * Routes the admin based on the selected alteration choice.
-     * 
+     *
      * @param adminChoice
      */
     private static void productAlterCategory(final int adminChoice) {
         Product product = new Product();
 
         switch (adminChoice) {
-        case 1:
-            product  = ProductDetails.getProductDetails();
-            insertProduct(product);
-            break;
+            case 1:
+                product = ProductDetails.getProductDetails();
+                insertProduct(product);
+                break;
 
-        case 2:
-            ProductDetails.showProductDetails();
-            ProductManager.showAdminChoice();
-            break;
+            case 2:
+                ProductDetails.showProductDetails();
+                ProductManager.showAdminChoice();
+                break;
 
-        case 3:
-            product = ProductDetails.getUpdateDetails();
-            updateProduct(product);
-            break;
+            case 3:
+                product = ProductDetails.getUpdateDetails();
+                updateProduct(product);
+                break;
 
-        case 4:
-            product = ProductDetails.getDeleteDetails();
-            deleteProduct(product);
-            break;
+            case 4:
+                product = ProductDetails.getDeleteDetails();
+                deleteProduct(product);
+                break;
 
-        case 5:
-            ProductManager.searchProduct();
-            ProductManager.showAdminChoice();
-            break;
+            case 5:
+                ProductManager.searchProduct();
+                ProductManager.showAdminChoice();
+                break;
 
-        case 6:
-            System.exit(0);
-            break;
+            case 6:
+                System.exit(0);
+                break;
 
-        default:
-            System.out.println("Enter choice 1 to 6.");
-            ProductManager.showAdminChoice();
+            default:
+                System.out.println("Enter choice 1 to 6.");
+                ProductManager.showAdminChoice();
         }
     }
 
     /**
      * Inserts the product.
-     * 
+     *
      * @param product
      */
     private static void insertProduct(final Product product) {
@@ -102,13 +102,13 @@ public class ProductManager {
 
     /**
      * Updates the Product.
-     * 
+     *
      * @param product
      */
     private static void updateProduct(final Product product) {
 
         try {
-            
+
             if (PRODUCT_CONTROLLER.updateProducts(product)) {
                 LOGGER.info("Successfully updated.");
             }
@@ -141,7 +141,7 @@ public class ProductManager {
     public static void searchProduct() {
 
         try {
-            List<Product> product =  PRODUCT_CONTROLLER.selectProduct(ProductDetails.getProductName());
+            List<Product> product = PRODUCT_CONTROLLER.selectProduct(ProductDetails.getProductName());
 
             for (Product newProduct : product) {
                 System.out.println(String.format("Product Name: %s", newProduct.getProductName()));

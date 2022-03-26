@@ -1,11 +1,11 @@
 package com.shopmodule.products.controller;
 
 import com.shopmodule.products.model.*;
-
 import com.shopmodule.products.service.ProductValidator;
+
 import jakarta.validation.Valid;
-import jakarta.ws.rs.PATCH;
 import org.osgi.service.component.annotations.Component;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *To fetch and modify products via REST services.
+ * To fetch and modify products via REST services.
  *
  * @author AswiniN
  */
@@ -33,13 +33,13 @@ public class RestImpl implements Rest {
     @Produces(MediaType.APPLICATION_JSON)
     @GET
     public List<Product> showProductDetails(@Valid @QueryParam("page") final int page,
-                                            @Valid @QueryParam("limit") final int limit){
+                                            @Valid @QueryParam("limit") final int limit) {
 
         if (page == 0 && limit == 0) {
             return REST_CONTROLLER.showProductDetails();
-        } else if (page <=0 || limit <=0) {
-           return new ArrayList<>();
-       }
+        } else if (page <= 0 || limit <= 0) {
+            return new ArrayList<>();
+        }
         return REST_CONTROLLER.showPaginatedProductDetails(page, limit);
     }
 
@@ -63,7 +63,6 @@ public class RestImpl implements Rest {
         return REST_CONTROLLER.insertProduct(product);
     }
 
-
     /**
      * Deletes the product.
      *
@@ -81,9 +80,8 @@ public class RestImpl implements Rest {
         if (!violationList.isEmpty()) {
             List list = new ArrayList<>();
             list.add(violationList);
-           return list;
+            return list;
         }
-
         return REST_CONTROLLER.deleteProduct(product);
     }
 
@@ -125,17 +123,4 @@ public class RestImpl implements Rest {
         }
         return list;
     }
-
-    //    @Path("/deleteProduct")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @DELETE
-//    public List deleteProduct(@Valid final Product product) {
-//        List violationList = ProductValidator.checkProduct(product, ProductDeleteChecks.class);
-//
-//        if (!violationList.isEmpty()) {
-//            List list = new ArrayList<>();
-//            list.add(violationList);
-//            return list;
-//        }
 }

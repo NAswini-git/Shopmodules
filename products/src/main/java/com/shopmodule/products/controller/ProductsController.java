@@ -11,7 +11,6 @@ import java.util.List;
  * table.
  *
  * @author AswiniN
- *
  */
 public class ProductsController {
 
@@ -19,7 +18,6 @@ public class ProductsController {
 
     /**
      * Shows the products.
-     *
      */
     public List<Product> showProductDetails() {
         return PRODUCTS_SERVICE.showProductDetails();

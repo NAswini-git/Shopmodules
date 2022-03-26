@@ -1,8 +1,6 @@
 package com.shopmodule.products.service;
 
 import com.shopmodule.products.model.Product;
-import com.shopmodule.products.model.ProductInsertChecks;
-import com.shopmodule.products.model.ProductSelectChecks;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -30,8 +28,9 @@ public class ProductValidator {
         final Set<ConstraintViolation<Product>> constraintViolations = VALIDATOR.validate(product, optedclass);
 
         for (ConstraintViolation<Product> message : constraintViolations) {
-           violationList.add(message.getMessage());
+            violationList.add(message.getMessage());
         }
+        FACTORY.close();
         return violationList;
     }
 }

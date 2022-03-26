@@ -8,6 +8,7 @@ import com.shopmodule.products.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Implementing class for data modification in product table.
  *
@@ -42,7 +43,7 @@ public class RestServiceImpl implements RestService {
         int start = ((page - 1) * limit);
         int end = start + limit;
 
-        if (page*limit > product.size() ){
+        if (page * limit > product.size()) {
             product = new ArrayList();
             product.add("Page is beyond the limit");
             return product;
@@ -90,7 +91,7 @@ public class RestServiceImpl implements RestService {
             isInserted = PRODUCTS_DAO.insertProduct(product);
             list.add(isInserted);
             return list;
-        }  else {
+        } else {
             list.add("Product is already available in the list! You can only update it.");
             return list;
         }
@@ -104,8 +105,9 @@ public class RestServiceImpl implements RestService {
     public List deleteProduct(final Product product) {
         List list = new ArrayList();
         boolean isDeleted = PRODUCTS_DAO.delete(product);
-        //boolean isDeleted = PRODUCTS_DAO.deleteProduct(product);
+
         if (isDeleted) {
+            list.add(isDeleted);
             return list;
         } else {
             list.add("Given product is not available in the table");
@@ -144,7 +146,7 @@ public class RestServiceImpl implements RestService {
             product.add("Given product is not available in the table");
             return product;
         }
-      }
+    }
 
     /**
      * Validates Id

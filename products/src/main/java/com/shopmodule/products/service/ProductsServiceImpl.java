@@ -25,7 +25,7 @@ public class ProductsServiceImpl implements ProductsService {
         List<Product> product = PRODUCTS_DAO.selectAllProducts();
 
         if (!product.isEmpty()) {
-           return product;
+            return product;
         }
         throw new ProductNotFoundException("Products are not available in the table");
     }
@@ -126,7 +126,7 @@ public class ProductsServiceImpl implements ProductsService {
 
         if (!product.isEmpty()) {
             return product;
-       }
+        }
         throw new ProductNotFoundException("Given product is not available in the table");
     }
 

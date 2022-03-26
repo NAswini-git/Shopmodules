@@ -14,7 +14,7 @@ import com.shopmodule.products.model.Product;
 
 /**
  * To modify the product table using SQL Queries.
- * 
+ *
  * @author AswiniN
  */
 public class ProductsAccessDAO {
@@ -48,27 +48,27 @@ public class ProductsAccessDAO {
                 preparedStatement.executeUpdate();
             }
             return true;
-        } catch (SQLException  e) {
+        } catch (SQLException e) {
             throw new DatabaseAccessDeniedException("Error occurred while inserting the product. Query may be invalid.");
         }
     }
 
     /**
      * Deletes the product from table specified by the user.
-     * 
+     *
      * @param product
      */
     public boolean deleteProduct(final Product product) {
         final String deleteQuery = "DELETE FROM products WHERE product_name = ? and brand_name = ? and  size = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
             preparedStatement.setString(1, product.getProductName());
             preparedStatement.setString(2, product.getBrandName());
             preparedStatement.setString(3, product.getSize());
 
             return preparedStatement.executeUpdate() > 0;
-        } catch (SQLException  e) {
+        } catch (SQLException e) {
             throw new DatabaseAccessDeniedException("Query may be invalid. So database access failed!");
         }
     }
@@ -80,23 +80,23 @@ public class ProductsAccessDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
             preparedStatement.setString(1, product.getProductId());
             return preparedStatement.executeUpdate() > 0;
-        } catch (SQLException  e) {
+        } catch (SQLException e) {
             throw new DatabaseAccessDeniedException("Query may be invalid. So database access failed!");
         }
     }
 
     /**
      * Updates the record of the table.
-     * 
+     *
      * @param product
      */
     public boolean updateProduct(final Product product) {
         final StringBuilder stringBuilder = new StringBuilder();
 
         String string = stringBuilder.append("UPDATE products SET").toString();
-        
+
         try (Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(string)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(string)) {
 
             if (product.getPrice() != null) {
                 stringBuilder.append(" price = '").append(product.getPrice()).append("'");
@@ -108,14 +108,14 @@ public class ProductsAccessDAO {
             stringBuilder.append(" WHERE product_name = '").append(product.getProductName()).append("'")
                     .append("and brand_name = '").append(product.getBrandName()).append("'");
             return preparedStatement.executeUpdate(stringBuilder.toString()) > 0;
-        } catch (SQLException  e) {
+        } catch (SQLException e) {
             throw new UpdateFailedException("Query may be invalid. Update Failed!");
         }
     }
 
     /**
      * Selects a specific product.
-     * 
+     *
      * @param productName
      */
     public List<Product> selectProduct(String productName) {
@@ -142,7 +142,7 @@ public class ProductsAccessDAO {
                 productsList.add(product);
             }
             return productsList;
-        } catch (SQLException  e) {
+        } catch (SQLException e) {
             throw new DatabaseAccessDeniedException("Query may be invalid. So database access failed!");
         }
     }
@@ -161,7 +161,7 @@ public class ProductsAccessDAO {
 
             while (productsResultSet.next()) {
                 Product product = new Product();
-                
+
                 product.setProductId(productsResultSet.getString(1));
                 product.setProductName(productsResultSet.getString(2));
                 product.setBrandName(productsResultSet.getString(3));
@@ -173,7 +173,7 @@ public class ProductsAccessDAO {
                 productsList.add(product);
             }
             return productsList;
-        } catch (SQLException  e) {
+        } catch (SQLException e) {
             throw new DatabaseAccessDeniedException("Query may be invalid. So database access failed!");
         }
     }

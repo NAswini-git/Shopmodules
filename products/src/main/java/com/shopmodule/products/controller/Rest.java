@@ -15,8 +15,6 @@ public interface Rest {
 
     List insertProduct(Product product);
 
-   // List deleteProduct(Product product);
-
     List updateProduct(Product product);
 
     List<Product> searchProduct(String productName);

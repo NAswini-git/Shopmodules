@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * To modify the data of products in the table.
- * 
+ *
  * @author AswiniN
  */
 public class ProductDetails {
@@ -19,10 +19,10 @@ public class ProductDetails {
     private static final ProductDetails PRODUCT_DETAILS = new ProductDetails();
     private static final Logger LOGGER = Logger.getLogger(ProductDetails.class);
     private static final UserInput USER_INPUT = UserInput.getInstance();
-    
+
     /**
      * Gets ProductDetails.
-     * 
+     *
      * @return product
      */
     public static Product getProductDetails() {
@@ -60,7 +60,7 @@ public class ProductDetails {
 
     /**
      * Shows admin choice.
-     * 
+     *
      * @param choice
      */
     private static String goToAdminChoice(final String choice) {
@@ -75,8 +75,8 @@ public class ProductDetails {
      * Gets Product name.
      */
     public static String getProductName() {
-       final String productName = goToAdminChoice(USER_INPUT.getString("Enter Product Name: " ));
-       
+        final String productName = goToAdminChoice(USER_INPUT.getString("Enter Product Name: "));
+
         if (com.shopmodule.validation.commonvalidation.Validation.validateName(productName)) {
             return productName;
         } else {
@@ -89,8 +89,8 @@ public class ProductDetails {
      * Gets Brand name.
      */
     private static String getBrandName() {
-        final String brandName = goToAdminChoice(USER_INPUT.getString("Enter Brand Name {Press 00 to go back to main menu}" ));
-      
+        final String brandName = goToAdminChoice(USER_INPUT.getString("Enter Brand Name {Press 00 to go back to main menu}"));
+
         if (com.shopmodule.validation.commonvalidation.Validation.validateName(brandName)) {
             return brandName;
         } else {
@@ -104,7 +104,7 @@ public class ProductDetails {
      */
     private static String getPrice() {
         final String price = goToAdminChoice(Double.toString(USER_INPUT.getDouble("Enter Price: {Press 00 to go back to main menu}")));
-       
+
         if (Validation.validatePrice(price)) {
             return price;
         } else {
@@ -117,8 +117,8 @@ public class ProductDetails {
      * Gets Size.
      */
     private static String getSize() {
-        final String size = goToAdminChoice(USER_INPUT.getString("Enter Size (S, M, L) {Press 00 to go back to main menu}" ));
-       
+        final String size = goToAdminChoice(USER_INPUT.getString("Enter Size (S, M, L) {Press 00 to go back to main menu}"));
+
         if (Validation.validateSize(size)) {
             return size;
         } else {
@@ -145,8 +145,8 @@ public class ProductDetails {
      * Gets Discount.
      */
     private String getDiscount() {
-        final String discount = goToAdminChoice(Integer.toString(USER_INPUT.getInt("Enter discount  {Press 00 to go back to main menu}" )));
-     
+        final String discount = goToAdminChoice(Integer.toString(USER_INPUT.getInt("Enter discount  {Press 00 to go back to main menu}")));
+
         if (Validation.validateDiscount(discount)) {
             return discount;
         } else {
@@ -176,23 +176,23 @@ public class ProductDetails {
 
         product.setProductName(ProductDetails.getProductName());
         product.setBrandName(ProductDetails.getBrandName());
-        
+
         switch (updateChoice) {
-        case 1:
-            product.setPrice(ProductDetails.getPrice());
-            break;
+            case 1:
+                product.setPrice(ProductDetails.getPrice());
+                break;
 
-        case 2:
-            product.setQuantity(PRODUCT_DETAILS.getQuantity());
-            break;
+            case 2:
+                product.setQuantity(PRODUCT_DETAILS.getQuantity());
+                break;
 
-        case 3:
-            product.setSize(ProductDetails.getSize());
-            break;
+            case 3:
+                product.setSize(ProductDetails.getSize());
+                break;
 
-        default:
-            System.out.println("Enter choice between 1 to 3.");
-            ProductDetails.getUpdateDetails();
+            default:
+                System.out.println("Enter choice between 1 to 3.");
+                ProductDetails.getUpdateDetails();
         }
         return product;
     }
@@ -203,7 +203,7 @@ public class ProductDetails {
     public static void showProductDetails() {
 
         try {
-           List<Product> product = PRODUCT_CONTROLLER.showProductDetails();
+            List<Product> product = PRODUCT_CONTROLLER.showProductDetails();
 
             for (Product newProduct : product) {
                 System.out.println(String.format("Product Id: %s", newProduct.getProductId()));
